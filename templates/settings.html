@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Settings | ApexCareer Tracker{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Settings</p>
+        <h2 class="page-title">Profile And Preferences</h2>
+        <p class="page-copy">
+            Manage your student profile, resume workspace, and AI experience settings.
+        </p>
+    </div>
+</section>
+
+<section class="settings-grid">
+    <section class="panel-card settings-panel">
+        <div class="panel-header">
+            <div>
+                <p class="section-label">Profile</p>
+                <h3 class="panel-title">Student Information</h3>
+            </div>
+        </div>
+
+        <div class="form-grid">
+            <div class="form-field">
+                <label for="name">Name</label>
+                <input id="name" type="text" value="{{ profile.name }}">
+            </div>
+            <div class="form-field">
+                <label for="email">Email</label>
+                <input id="email" type="email" value="{{ profile.email }}">
+            </div>
+            <div class="form-field">
+                <label for="school">School</label>
+                <input id="school" type="text" value="{{ profile.school }}">
+            </div>
+            <div class="form-field">
+                <label for="major">Major</label>
+                <input id="major" type="text" value="{{ profile.major }}">
+            </div>
+            <div class="form-field">
+                <label for="graduation_year">Graduation Year</label>
+                <input id="graduation_year" type="text" value="{{ profile.graduation_year }}">
+            </div>
+        </div>
+    </section>
+
+    <section class="panel-card settings-panel">
+        <div class="panel-header">
+            <div>
+                <p class="section-label">Resume</p>
+                <h3 class="panel-title">Resume Workspace</h3>
+            </div>
+        </div>
+
+        <div class="settings-stack">
+            <div class="upload-card">
+                <i data-lucide="upload"></i>
+                <div>
+                    <strong>Upload Resume File</strong>
+                    <p class="cell-subtle">Keep a current version ready for AI tools and job matching.</p>
+                </div>
+            </div>
+            <div class="settings-actions">
+                <button class="button primary-button" type="button">Upload Resume</button>
+                <button class="button secondary-button" type="button">Replace Resume</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel-card settings-panel">
+        <div class="panel-header">
+            <div>
+                <p class="section-label">Preferences</p>
+                <h3 class="panel-title">AI Experience</h3>
+            </div>
+        </div>
+
+        <div class="settings-stack">
+            <div class="form-field">
+                <label for="response_style">AI Response Style</label>
+                <select id="response_style" class="styled-select">
+                    <option>Concise</option>
+                    <option selected>Balanced</option>
+                    <option>Detailed</option>
+                </select>
+            </div>
+            <div class="settings-actions">
+                <button class="button secondary-button" type="button">Export Application Data</button>
+            </div>
+        </div>
+    </section>
+</section>
+{% endblock %}

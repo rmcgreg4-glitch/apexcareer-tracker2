@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics | ApexCareer Tracker{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Analytics</p>
+        <h2 class="page-title">Pipeline Analytics</h2>
+        <p class="page-copy">
+            Understand conversion performance, monthly application activity, and where your pipeline is concentrating.
+        </p>
+    </div>
+    <a class="button primary-button" href="{{ url_for('applications') }}">Open Applications</a>
+</section>
+
+<section class="analytics-metrics-grid">
+    <article class="panel-card metric-panel">
+        <p class="section-label">Application Funnel</p>
+        <h3 class="panel-title">Applications → Interviews → Offers</h3>
+        <div class="funnel-row">
+            <div class="funnel-step">
+                <strong>{{ analytics_data.applications }}</strong>
+                <span>Applications</span>
+            </div>
+            <i data-lucide="arrow-right"></i>
+            <div class="funnel-step">
+                <strong>{{ analytics_data.interviews }}</strong>
+                <span>Interviews</span>
+            </div>
+            <i data-lucide="arrow-right"></i>
+            <div class="funnel-step">
+                <strong>{{ analytics_data.offers }}</strong>
+                <span>Offers</span>
+            </div>
+        </div>
+    </article>
+
+    <article class="panel-card metric-panel">
+        <p class="section-label">Interview Conversion Rate</p>
+        <h3 class="panel-title">{{ analytics_data.interview_conversion_rate }}%</h3>
+        <p class="page-copy">Calculated as interviews divided by total applications.</p>
+    </article>
+
+    <article class="panel-card metric-panel">
+        <p class="section-label">Offer Rate</p>
+        <h3 class="panel-title">{{ analytics_data.offer_rate }}%</h3>
+        <p class="page-copy">Calculated as offers divided by interviews.</p>
+    </article>
+</section>
+
+<section class="analytics-grid">
+    <section class="panel-card chart-panel">
+        <div class="panel-header">
+            <div>
+                <p class="section-label">Applications Per Month</p>
+                <h3 class="panel-title">Monthly Activity</h3>
+            </div>
+        </div>
+        <div
+            id="applications-month-chart"
+            class="bar-chart"
+            data-chart='{{ analytics_data.monthly_applications | tojson }}'
+        ></div>
+    </section>
+
+    <section class="panel-card chart-panel">
+        <div class="panel-header">
+            <div>
+                <p class="section-label">Top Companies Applied To</p>
+                <h3 class="panel-title">Company Focus</h3>
+            </div>
+        </div>
+        <div
+            id="top-companies-chart"
+            class="bar-chart"
+            data-chart='{{ analytics_data.top_companies | tojson }}'
+        ></div>
+    </section>
+</section>
+{% endblock %}

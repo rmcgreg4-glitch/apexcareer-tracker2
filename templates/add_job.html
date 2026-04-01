@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Add Application | ApexCareer Tracker{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Add Application</p>
+        <h2 class="page-title">Capture a New Opportunity</h2>
+        <p class="page-copy">
+            Save the role details once and let ApexCareer Tracker generate prep materials you can keep with the application.
+        </p>
+    </div>
+    <a class="button secondary-button" href="{{ url_for('applications') }}">Back to Applications</a>
+</section>
+
+<section class="panel-card form-panel">
+    <div class="panel-header">
+        <div>
+            <p class="section-label">Application Form</p>
+            <h3 class="panel-title">New Job Entry</h3>
+        </div>
+        <span class="count-badge">Local AI Mode</span>
+    </div>
+
+    <form id="job-form" method="post" novalidate>
+        <div class="form-grid">
+            <div class="form-field">
+                <label for="company">Company Name</label>
+                <input
+                    type="text"
+                    id="company"
+                    name="company"
+                    value="{{ form_data.get('company', '') }}"
+                    required
+                >
+            </div>
+
+            <div class="form-field">
+                <label for="title">Job Title</label>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value="{{ form_data.get('title', '') }}"
+                    required
+                >
+            </div>
+
+            <div class="form-field">
+                <label for="link">Job Link</label>
+                <input
+                    type="url"
+                    id="link"
+                    name="link"
+                    placeholder="https://example.com/job-posting"
+                    value="{{ form_data.get('link', '') }}"
+                    required
+                >
+            </div>
+
+            <div class="form-field">
+                <label for="date_applied">Date Applied</label>
+                <input
+                    type="date"
+                    id="date_applied"
+                    name="date_applied"
+                    value="{{ form_data.get('date_applied', '') }}"
+                    required
+                >
+            </div>
+        </div>
+
+        <div class="form-field">
+            <label for="description">Job Description</label>
+            <textarea
+                id="description"
+                name="description"
+                rows="14"
+                placeholder="Paste the full job description here..."
+                required
+            >{{ form_data.get('description', '') }}</textarea>
+        </div>
+
+        <div class="form-field">
+            <label for="notes">Notes</label>
+            <textarea
+                id="notes"
+                name="notes"
+                rows="4"
+                placeholder="Example: Met recruiter at career fair"
+            >{{ form_data.get('notes', '') }}</textarea>
+        </div>
+
+        <div id="loading-state" class="loading-box hidden" aria-live="polite">
+            <div class="spinner"></div>
+            <div>
+                <strong>Generating career support...</strong>
+                <p>ApexCareer Tracker is creating your summary, interview questions, and follow-up email.</p>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button id="submit-button" class="button primary-button" type="submit">
+                + Add Application
+            </button>
+        </div>
+    </form>
+</section>
+{% endblock %}

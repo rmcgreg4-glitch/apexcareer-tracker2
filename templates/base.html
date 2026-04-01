@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ApexCareer Tracker{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-mark">
+                    <i data-lucide="sparkles"></i>
+                </div>
+                <div>
+                    <p class="brand-label">ApexCareer Tracker</p>
+                    <h1 class="brand-title">Your AI-powered career command center.</h1>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a class="nav-link {% if active_page == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}">
+                    <i data-lucide="house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a class="nav-link {% if active_page == 'applications' %}active{% endif %}" href="{{ url_for('applications') }}">
+                    <i data-lucide="folder-open"></i>
+                    <span>Applications</span>
+                </a>
+                <a class="nav-link {% if active_page == 'add' %}active{% endif %}" href="{{ url_for('add_job') }}">
+                    <i data-lucide="plus"></i>
+                    <span>Add Application</span>
+                </a>
+                <a class="nav-link {% if active_page == 'ai_tools' %}active{% endif %}" href="{{ url_for('ai_tools') }}">
+                    <i data-lucide="sparkles"></i>
+                    <span>AI Tools</span>
+                </a>
+                <a class="nav-link {% if active_page == 'analytics' %}active{% endif %}" href="{{ url_for('analytics') }}">
+                    <i data-lucide="chart-column"></i>
+                    <span>Analytics</span>
+                </a>
+                <a class="nav-link {% if active_page == 'settings' %}active{% endif %}" href="{{ url_for('settings') }}">
+                    <i data-lucide="settings"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p class="sidebar-footer-label">Career Assistant</p>
+                <p class="sidebar-footer-copy">
+                    Track applications, prep smarter, and keep every next step in one polished workspace.
+                </p>
+            </div>
+        </aside>
+
+        <main class="main-panel">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <section class="flash-stack">
+                        {% for category, message in messages %}
+                            <div class="flash-message {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </section>
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

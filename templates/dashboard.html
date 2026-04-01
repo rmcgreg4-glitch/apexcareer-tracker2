@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | ApexCareer Tracker{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Dashboard</p>
+        <h2 class="page-title">Daily Career Overview</h2>
+        <p class="page-copy">
+            Start here for a focused snapshot of your application progress, recent activity, and AI guidance.
+        </p>
+    </div>
+    <a class="button primary-button" href="{{ url_for('add_job') }}">+ Add Application</a>
+</section>
+
+<section class="stats-grid">
+    <a class="stat-card clickable-stat-card" href="{{ url_for('applications', filter='all') }}">
+        <div class="stat-icon"><i data-lucide="send"></i></div>
+        <p class="stat-label">Applications Submitted</p>
+        <strong class="stat-value">{{ jobs|length }}</strong>
+        <p class="stat-copy">All opportunities currently tracked in ApexCareer.</p>
+    </a>
+    <a class="stat-card clickable-stat-card" href="{{ url_for('applications', filter='interview') }}">
+        <div class="stat-icon"><i data-lucide="calendar-check-2"></i></div>
+        <p class="stat-label">Interviews Scheduled</p>
+        <strong class="stat-value">{{ jobs | selectattr('status', 'equalto', 'Interview') | list | length }}</strong>
+        <p class="stat-copy">Roles moving forward into active interview loops.</p>
+    </a>
+    <a class="stat-card clickable-stat-card" href="{{ url_for('applications', filter='offer') }}">
+        <div class="stat-icon"><i data-lucide="badge-check"></i></div>
+        <p class="stat-label">Offers Received</p>
+        <strong class="stat-value">{{ jobs | selectattr('status', 'equalto', 'Offer') | list | length }}</strong>
+        <p class="stat-copy">Opportunities with strong momentum and final-stage traction.</p>
+    </a>
+</section>
+
+<section class="dashboard-overview-grid">
+    <section class="panel-card insight-panel">
+        <div class="panel-header">
+            <div>
+                <p class="section-label">AI Career Insight</p>
+                <h3 class="panel-title">Personalized Career Guidance</h3>
+            </div>
+        </div>
+        <div class="insight-card">
+            <div class="insight-icon"><i data-lucide="sparkles"></i></div>
+            <p>{{ insight }}</p>
+        </div>
+    </section>
+
+    <section class="panel-card recent-panel">
+        <div class="panel-header">
+            <div>
+                <p class="section-label">Recent Applications</p>
+                <h3 class="panel-title">Latest Activity</h3>
+            </div>
+            <a class="button secondary-button" href="{{ url_for('applications') }}">View All</a>
+        </div>
+
+        {% if recent_jobs %}
+            <div class="recent-list">
+                {% for job in recent_jobs %}
+                    <a class="recent-item" href="{{ url_for('job_detail', job_id=job.id) }}">
+                        <div class="company-cell">
+                            <span class="company-avatar">{{ job.company[:1] }}</span>
+                            <div>
+                                <strong>{{ job.company }}</strong>
+                                <p class="cell-subtle">{{ job.title }}</p>
+                            </div>
+                        </div>
+                        <div class="recent-meta">
+                            <span class="status-pill status-{{ job.status|lower }}">{{ job.status }}</span>
+                            <span class="recent-date">{{ job.date_applied }}</span>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <h3>No recent applications</h3>
+                <p>Add a job application to start seeing activity here.</p>
+            </div>
+        {% endif %}
+    </section>
+</section>
+{% endblock %}

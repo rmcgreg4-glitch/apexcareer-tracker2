@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}AI Tools | ApexCareer Tracker{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div>
+        <p class="eyebrow">AI Tools</p>
+        <h2 class="page-title">Career AI Workspace</h2>
+        <p class="page-copy">
+            Explore AI-powered tools that help you tailor applications, prepare faster, and make stronger follow-ups.
+        </p>
+    </div>
+    <a class="button primary-button" href="{{ url_for('add_job') }}">+ Add Application</a>
+</section>
+
+<section class="ai-workspace-grid">
+    <div class="tools-grid">
+        <article
+            class="tool-card interactive-tool-card active"
+            data-tool="resume-analyzer"
+            data-title="Resume Analyzer"
+            data-description="Paste your resume and ask questions about positioning, impact, and clarity."
+        >
+            <div class="tool-card-icon"><i data-lucide="file-search"></i></div>
+            <h3>Resume Analyzer</h3>
+            <p>Paste your resume and ask questions about positioning, impact, and clarity.</p>
+        </article>
+        <article
+            class="tool-card interactive-tool-card"
+            data-tool="interview-prep"
+            data-title="Interview Prep Generator"
+            data-description="Generate interview questions from a job description and focus on likely themes."
+        >
+            <div class="tool-card-icon"><i data-lucide="messages-square"></i></div>
+            <h3>Interview Prep Generator</h3>
+            <p>Generate interview questions from a job description and focus on likely themes.</p>
+        </article>
+        <article
+            class="tool-card interactive-tool-card"
+            data-tool="follow-up-email"
+            data-title="Follow-Up Email Writer"
+            data-description="Draft polished follow-up emails after applications, interviews, or networking conversations."
+        >
+            <div class="tool-card-icon"><i data-lucide="mail"></i></div>
+            <h3>Follow-Up Email Writer</h3>
+            <p>Draft polished follow-up emails after applications, interviews, or networking conversations.</p>
+        </article>
+        <article
+            class="tool-card interactive-tool-card"
+            data-tool="job-match"
+            data-title="Job Match Score"
+            data-description="Compare a resume against a job description and surface strengths plus skill gaps."
+        >
+            <div class="tool-card-icon"><i data-lucide="scan-search"></i></div>
+            <h3>Job Match Score</h3>
+            <p>Compare a resume against a job description and surface strengths plus skill gaps.</p>
+        </article>
+    </div>
+
+    <section class="panel-card ai-chat-panel">
+        <div class="panel-header">
+            <div>
+                <p class="section-label">Interactive AI Workspace</p>
+                <h3 id="tool-workspace-title" class="panel-title">Resume Analyzer</h3>
+            </div>
+        </div>
+
+        <div class="chat-shell">
+            <div id="tool-response-area" class="tool-response-area">
+                <div class="chat-message ai-message">
+                    <strong>ApexCareer Assistant</strong>
+                    <p id="tool-workspace-description">
+                        Paste your resume and ask questions about positioning, impact, and clarity.
+                    </p>
+                </div>
+            </div>
+
+            <div class="tool-input-stack">
+                <textarea
+                    id="tool-primary-input"
+                    rows="8"
+                    placeholder="Paste resume text, a job description, or the content you want help with..."
+                ></textarea>
+                <textarea
+                    id="tool-secondary-input"
+                    rows="6"
+                    class="hidden"
+                    placeholder="Paste the matching job description here for Job Match Score..."
+                ></textarea>
+                <div class="tool-controls">
+                    <button id="tool-send-button" class="button primary-button" type="button">Send</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+{% endblock %}

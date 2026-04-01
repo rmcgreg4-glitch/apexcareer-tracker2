@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block title %}{{ job.company }} | ApexCareer Tracker{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Applications</p>
+        <h2 class="page-title">{{ job.company }}</h2>
+        <p class="page-copy">{{ job.title }} • Applied on {{ job.date_applied }}</p>
+    </div>
+    <div class="header-actions">
+        <span class="status-pill status-{{ job.status|lower }}">{{ job.status }}</span>
+        <a class="button secondary-button" href="{{ url_for('applications') }}">Back to Applications</a>
+    </div>
+</section>
+
+<section class="detail-layout">
+    <div class="detail-main">
+        <section class="panel-card">
+            <div class="panel-header">
+                <div>
+                    <p class="section-label">Overview</p>
+                    <h3 class="panel-title">Application Details</h3>
+                </div>
+            </div>
+
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Company</span>
+                    <strong>{{ job.company }}</strong>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Role</span>
+                    <strong>{{ job.title }}</strong>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Date Applied</span>
+                    <strong>{{ job.date_applied }}</strong>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Job Link</span>
+                    <a href="{{ job.link }}" target="_blank" rel="noopener noreferrer">Open Posting</a>
+                </div>
+            </div>
+
+            <div class="description-card">
+                <span class="detail-label">Notes</span>
+                <p class="preserve-whitespace">{{ job.get("notes", "No notes added yet.") }}</p>
+            </div>
+
+            <div class="description-card">
+                <span class="detail-label">Job Description</span>
+                <p class="preserve-whitespace">{{ job.description }}</p>
+            </div>
+
+            <div class="description-card">
+                <span class="detail-label">Update Notes</span>
+                <form action="{{ url_for('update_notes', job_id=job.id) }}" method="post" class="notes-form">
+                    <div class="form-field">
+                        <textarea
+                            id="notes"
+                            name="notes"
+                            rows="5"
+                            placeholder="Add recruiter notes, follow-up reminders, or interview takeaways..."
+                        >{{ job.get("notes", "") }}</textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button class="button primary-button" type="submit">Save Notes</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="panel-card">
+            <div class="panel-header">
+                <div>
+                    <p class="section-label">Job Support</p>
+                    <h3 class="panel-title">AI Career Guidance</h3>
+                </div>
+            </div>
+
+            <div class="support-grid">
+                <article class="support-card">
+                    <h4>Job Summary</h4>
+                    <ul class="clean-list">
+                        {% for item in job.summary %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </article>
+
+                <article class="support-card">
+                    <h4>Interview Questions</h4>
+                    <ol class="clean-list numbered-list">
+                        {% for question in job.interview_questions %}
+                            <li>{{ question }}</li>
+                        {% endfor %}
+                    </ol>
+                </article>
+            </div>
+
+            <article class="support-card email-support">
+                <h4>Follow-Up Email</h4>
+                <div class="email-card preserve-whitespace">{{ job.followup_email }}</div>
+            </article>
+        </section>
+    </div>
+
+    <aside class="detail-side">
+        <section class="panel-card sticky-panel">
+                <div class="panel-header">
+                    <div>
+                    <p class="section-label">AI Tools</p>
+                    <h3 class="panel-title">Resume Match Analyzer</h3>
+                    </div>
+                {% if analysis %}
+                    <span class="count-badge">{{ analysis.match_score }}%</span>
+                {% endif %}
+            </div>
+
+            <form method="post" class="resume-form">
+                <div class="form-field">
+                    <label for="resume_text">Paste Resume Text</label>
+                    <textarea
+                        id="resume_text"
+                        name="resume_text"
+                        rows="12"
+                        placeholder="Paste your resume text here to compare it with this job description..."
+                    >{{ resume_text }}</textarea>
+                </div>
+                <div class="form-actions">
+                    <button class="button primary-button" type="submit">Analyze Resume Match</button>
+                </div>
+            </form>
+
+            {% if analysis %}
+                <div class="analysis-stack">
+                    <article class="analysis-card score-card">
+                        <span class="detail-label">Match Score</span>
+                        <div class="score-ring">
+                            <strong>{{ analysis.match_score }}</strong>
+                            <span>/100</span>
+                        </div>
+                        <p class="analysis-copy">
+                            Estimated by comparing shared keywords between the resume and the job description.
+                        </p>
+                    </article>
+
+                    <article class="analysis-card">
+                        <h4>Strengths</h4>
+                        <ul class="clean-list">
+                            {% for item in analysis.strengths %}
+                                <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </article>
+
+                    <article class="analysis-card">
+                        <h4>Missing Skills</h4>
+                        <ul class="clean-list">
+                            {% for item in analysis.missing_skills %}
+                                <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </article>
+                </div>
+            {% endif %}
+        </section>
+    </aside>
+</section>
+{% endblock %}
